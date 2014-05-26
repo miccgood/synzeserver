@@ -117,11 +117,14 @@ class Format {
 				$value = (int) $value;
 			}
 
+                        $isNode = false;
 			// no numeric keys in our xml please!
 			if (is_numeric($key))
 			{
 				// make string key...
-				$key = (singular($basenode) != $basenode) ? singular($basenode) : 'item';
+//				$key = (singular($basenode) != $basenode) ? singular($basenode) : 'item';
+                            $key = $basenode;
+                             $isNode = true;
 			}
 
 			// replace anything not alpha numeric
@@ -140,17 +143,28 @@ class Format {
 			// if there is another array found recursively call this function
 			else if (is_array($value) || is_object($value))
 			{
-				$node = $structure->addChild($key);
+                            if( $isNode){
+                                $node = $structure->addChild($key);
 
 				// recursive call.
 				$this->to_xml($value, $node, $key);
+                            } else {
+                                $this->to_xml($value, $structure, $key);
+                            }
+				
+                                
+                                
+                                
+                                        
 			}
 			else
 			{
 				// add single node.
 				$value = htmlspecialchars(html_entity_decode($value, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, "UTF-8");
-
-				$structure->addChild($key, $value);
+                                
+                                
+                                
+				$structure->addChild($key, ( is_null($value) ? "" : $value));
 			}
 		}
 

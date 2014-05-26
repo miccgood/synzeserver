@@ -2,23 +2,25 @@
 
  class ServerController extends REST_Controller {
 
-        function __construct() {
-            parent::__construct();
+    protected static $END_TAG = "_endTag";
+            
+    function __construct() {
+        parent::__construct();
 
-            /* Standard Libraries of codeigniter are required */
-            $this->load->database();
-            $this->load->helper('url');
+        /* Standard Libraries of codeigniter are required */
+        $this->load->database();
+        $this->load->helper('url');
 
-            /* ------------------ */
+        /* ------------------ */
 
 //            $this->load->library('grocery_crud');
 //            $this->load->library('stringutils', FALSE);
 //            $this->load->library('session');
 
-            $this->load->model('my_model', 'my_model');
+        $this->load->model('my_model', 'my_model');
 //            $this->load->model('spot_on_model', 'm');
-        
-            $this->load->model('server_model', 'rm');
 
-        }
+        $this->load->model('server_model', 'rm');
+
     }
+}

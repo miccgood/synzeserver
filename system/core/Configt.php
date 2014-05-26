@@ -99,16 +99,10 @@ class CI_Config {
 		$found = FALSE;
 		$loaded = FALSE;
 
-//		$check_locations = defined('ENVIRONMENT')
-//			? array(ENVIRONMENT.'/'.$file, $file)
-//			: array($file);
-
-                // add by momo
-                $check_locations = defined('ENVIRONMENT') 
-			? array(ENVIRONMENT.'/'.$file, SPOTON.'/'.$file, $file)
+		$check_locations = defined('ENVIRONMENT')
+			? array(ENVIRONMENT.'/'.$file, $file)
 			: array($file);
 
-                
 		foreach ($this->_config_paths as $path)
 		{
 			foreach ($check_locations as $location)

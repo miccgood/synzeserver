@@ -19,6 +19,7 @@
  *
  */
 	define('ENVIRONMENT', 'development');
+        define('SPOTON', 'spoton');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

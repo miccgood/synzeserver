@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Example extends REST_Controller
+class Example extends ServerController
 {
     function user_get()
     {
