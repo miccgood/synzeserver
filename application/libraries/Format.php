@@ -86,9 +86,14 @@ class Format {
 	// Format XML for output
 	public function to_xml($data = null, $structure = null, $basenode = 'xml')
 	{
+            
+//            $oXML = new SimpleXMLElement($this->_data);
+//            return ;
 		if ($data === null and ! func_num_args())
 		{
-			$data = $this->_data;
+                    $ci =& get_instance(); 
+                    return $ci->getResponse();
+//			$data = $this->_data;
 		}
 
 		// turn off compatibility mode as simple xml throws a wobbly if you don't.
@@ -143,14 +148,14 @@ class Format {
 			// if there is another array found recursively call this function
 			else if (is_array($value) || is_object($value))
 			{
-                            if( $isNode){
-                                $node = $structure->addChild($key);
+//                            if( $isNode){
+//                                $node = $structure->addChild($key);
 
 				// recursive call.
-				$this->to_xml($value, $node, $key);
-                            } else {
+//				$this->to_xml($value, $node, $key);
+//                            } else {
                                 $this->to_xml($value, $structure, $key);
-                            }
+//                            }
 				
                                 
                                 
