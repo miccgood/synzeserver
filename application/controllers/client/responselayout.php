@@ -1,24 +1,30 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class GetLayout extends ServerController {
+class ResponseLayout extends SpotOnTerminalGet {
+
+    protected function execute()
+    {
+        $storyId = $this->input->get('story_id');
+//        $uuid = "6ae86830dc3cc15c";
+        if ($storyId)
+	{
+            $this->getLayoutToXml($storyId);
+	}
+    }
     
-    function layout_get(){
-        $uuid = $this->get('uuid');
-        if(!$uuid)
-        {
-            $this->response(NULL, 400);
-        }
-        
-        $storylist = $this->rm->selectStoryByUUID($uuid);
+    private function getLayoutToXml($storyId)
+    {
+        $storyId = "'".  str_replace(",", "', '", $storyId)."'";
+        $storylist = $this->m->selectWhereIn("mst_story", array("story_ID" => $storyId));
         foreach ($storylist as $story) {
             // Start branch 'cars'
             $this->xml_writer->startBranch('story', $story);
             $storyId = $story->story_ID;
-            $dsplist = $this->rm->selectDisplayByStoryId($storyId);
+            $dsplist = $this->m->selectDisplayByStoryId($storyId);
             foreach ($dsplist as $dsp){
                 $dspId = $dsp->dsp_ID;
                 $this->xml_writer->startBranch('display', $dsp);
-                $medialist = $this->rm->selectMediaByStoryIdAndDspId($storyId, $dspId);
+                $medialist = $this->m->selectMediaByStoryIdAndDspId($storyId, $dspId);
                 foreach ($medialist as $media){
                     $this->xml_writer->startBranch('media', $media);
                     $this->xml_writer->endBranch();
@@ -27,13 +33,8 @@ class GetLayout extends ServerController {
             }
             $this->xml_writer->endBranch();
         }
-        $xml = $this->xml_writer->getXml(FALSE);
         
-        $response = $this->convertXmlToArray($xml);
-        if($response)
-        {
-            $this->response($response, 200); // 200 being the HTTP response code
-        }
+//        $this->output();
     }
 }
 

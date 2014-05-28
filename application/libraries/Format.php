@@ -92,7 +92,13 @@ class Format {
 		if ($data === null and ! func_num_args())
 		{
                     $ci =& get_instance(); 
-                    return $ci->getResponse();
+                    $response = $ci->getResponse();
+                    
+                    if(is_null($response)){
+                        $data = $this->_data;
+                    } else {
+                        return $response;
+                    }
 //			$data = $this->_data;
 		}
 

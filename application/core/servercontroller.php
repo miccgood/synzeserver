@@ -52,4 +52,17 @@
     public function getResponse() {
         return $this->responseXmlString;
     }
+    
+    public function response($data = null, $http_code = null){
+        if($data == null){
+            $xml = $this->xml_writer->getXml(FALSE);
+        
+            $data = $this->convertXmlToArray($xml);
+        }
+        
+        if($data)
+        {
+            $this->response($data, $http_code); // 200 being the HTTP response code
+        }
+    }
 }
